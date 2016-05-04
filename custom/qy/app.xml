@@ -1,0 +1,17 @@
+<app>
+    <name>泉依</name>
+    <description>泉依</description>
+
+    <author>
+        <name>jrl</name>
+        <email>jiarongling@163.com</email>
+    </author>
+
+    <version>0.1</version>
+    <license>jrl license</license>
+    <parent_model_class>dbeav_model</parent_model_class>
+
+	<depends>
+        <app>desktop</app>
+    </depends>
+</app>

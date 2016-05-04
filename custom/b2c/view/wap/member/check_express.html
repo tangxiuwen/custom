@@ -1,0 +1,28 @@
+<div class="full-screen">
+    <header>
+        <div class="a-bar">
+            <a href="javascript:history.back()" class="a-back">
+                <i class="arr left"></i>
+                返回
+            </a>
+            <div class="a-name">
+                物流查询
+            </div>
+        </div>
+    </header>
+    <div class="log_detail">
+        <h3>物流详情</h3>
+        <div class="log_detail-right">
+            <ul>
+                <{foreach from=$list item=item key=key}>
+                <li class="item">
+                    <i class="log_circle"></i>
+                    <p>
+                        <{$item.context}><span><{$item.ftime}></span>
+                    </p>
+                </li>
+                <{/foreach}>
+            </ul>
+        </div>
+    </div>
+</div>

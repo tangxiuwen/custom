@@ -1,0 +1,84 @@
+<form action="index.php?app=weixin&ctl=admin_share&act=toAdd" method="post" id="promotion_form" name="promotion_form">
+    <input type="hidden" name="share_id" value="<{$share.share_id}>"/>
+
+    <h3><{t}>基本信息<{/t}></h3>
+    <div id="x-g-basic" class="goods-detail tableform">
+        <div class="division">
+            <table border="0" cellpadding="0" cellspacing="0" class="rule_list">
+                <tr>
+                    <th style="width:10%"><{t}>活动名称<{/t}>：</th>
+                    <td style="width:90%">
+                        <{input type="text" class="inputstyle" name="name" required="true" vtype='required' value=$share.name size=60 }><em><font color="red">*</font></em>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>启用状态<{/t}>：</th>
+                    <td>
+                        <label><input type="radio" name="status"<{if $share.status != 'false' }> checked="checked"<{/if}> value="true" ><{t}>是<{/t}></label>
+                        <label><input type="radio" name="status"<{if $share.status == "false"}> checked="checked"<{/if}> value="false" ><{t}>否<{/t}></label>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>开始时间<{/t}>：</th>
+                    <td><{input type="time" value=$share.from_time vtype="required" name="from_time"}></td>
+                </tr>
+                <tr>
+                    <th><{t}>结束时间<{/t}>：</th>
+                    <td><{input type="time" value=$share.to_time vtype="required" name="to_time"}></td>
+                </tr>
+                <tr>
+                    <th><{t}>随机赠送虚拟金额范围<{/t}>：</th>
+                    <td>
+                        <{input type="text" value=$share.down_limit vtype="required" name="down_limit" class="inputstyle" size=3}>&nbsp;-----
+                        <{input type="text" value=$share.top_limit vtype="required" name="top_limit" class="inputstyle" size=3}>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>抵扣订单金额上限<{/t}>：</th>
+                    <td><{input type="text" value=$share.deduction_limit vtype="required" name="deduction_limit" class="inputstyle" size=3}>&nbsp;%（按照订单商品总额的比例）</td>
+                </tr>
+                <tr>
+                    <th><{t}>有效期<{/t}>：</th>
+                    <td><{input type="text" value=$share.validity vtype="required" name="validity" class="inputstyle" size=3}>&nbsp;天</td>
+                </tr>
+                <tr>
+                    <th><{t}>领取总次数<{/t}>：</th>
+                    <td><{input type="text" value=$share.get_total_count vtype="required" name="get_total_count" class="inputstyle" size=3}>&nbsp;次</td>
+                </tr>
+                <tr>
+                    <th><{t}>使用条件<{/t}>：</th>
+                    <td>订单商品总价满&nbsp;<{input type="text" value=$share.conditions name="conditions" class="inputstyle" size=3}>&nbsp;时使用</td>
+                </tr>
+                <tr>
+                    <th><{t}>分享图片<{/t}>：</th>
+                    <td><{input type="image" name="image" value=$share.image}></td>
+                </tr>
+                <tr>
+                    <th style="width:10%"><{t}>活动描述<{/t}>：</th>
+                    <td style="width:90%"><{input type="textarea" style=" width:30%" class="inputstyle" value=$share.description name="description" rows="5" }></td>
+                </tr>
+                <tr>
+                    <th><{t}>自定义活动页用户名称颜色<{/t}>：</th>
+                    <td>#<{input type="text" value=$share.m_color name="m_color" class="inputstyle"}></td>
+                </tr>
+                <tr>
+                    <th><{t}>自定义活动页领取列表背景色<{/t}>：</th>
+                    <td>#<{input type="text" value=$share.l_color name="l_color" class="inputstyle"}></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="table-action">
+        <{button type="submit"  label=$___b2c="保存"|t:'b2c'}>
+    </div>
+</form>
+
+<script>
+    $('promotion_form').store('target', {
+        onComplete: function () {
+            if (opener.finderGroup['<{$env.get._finder.finder_id}>'])
+                opener.finderGroup['<{$env.get._finder.finder_id}>'].refresh();
+            window.close();
+        }
+    });
+</script>

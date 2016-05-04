@@ -1,0 +1,10 @@
+<services>
+    <service id="openapi.qy">
+        <class>qy_reponse</class>
+    </service>
+
+    <service id="passport">
+		<class>qy_passport_trust</class>
+	</service>
+
+</services>
