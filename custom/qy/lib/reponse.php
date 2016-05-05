@@ -59,4 +59,23 @@ class qy_reponse extends qy_api
 
     }
 
+
+	public function request($method, $params, $writelog, $async = false, $addon = '', $time_out = 5)
+    {
+
+		/** @var apiactionlog_mdl_apilog $oAction_log */
+        $oAction_log = app::get('apiactionlog')->model('apilog');
+        $log_title = $writelog['log_title'];
+        $original_bn = $writelog['original_bn'];
+        $log_type = $writelog['log_type'];
+
+
+        $time_out = 60;
+        $log_sdf = $oAction_log->write_log($log_title, $method['method'], $params, $log_type, 'fail', '', $original_bn, $addon, 'request');
+        $rpc_callback = array('', '', array('log_id' => $log_sdf['log_id']));
+
+
+        return $this->rpc_request($method, $params, $rpc_callback, $async, $time_out, $writelog, $addon);
+    }
+
 }
