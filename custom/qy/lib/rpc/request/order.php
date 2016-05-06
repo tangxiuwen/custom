@@ -38,6 +38,7 @@ class qy_rpc_request_order extends qy_request{
 //
 //		);
 
+		$order_id = '54898635312';
 
 		$order = array(
 			'merchantId' => '0001', //商户编号
@@ -63,7 +64,7 @@ class qy_rpc_request_order extends qy_request{
 
 		);
 
-		$rs = $this->call('qy.order.create', $order);
+		$rs = $this->call('qy.order.create', $order, '订单'.$order_id.'创建');
 
 		var_dump($rs);
 		die();
