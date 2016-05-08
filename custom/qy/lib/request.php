@@ -25,7 +25,7 @@ class qy_request extends qy_api
 		parent::__construct();
 	}
 
-	public function call($method, $data, $log_name, &$msg = '', $apilog_id = false){
+	public function call($method, $data, $log_name, &$rs_msg = '', $apilog_id = false){
 
 		$json_str = json_encode($data);
 
@@ -38,7 +38,7 @@ class qy_request extends qy_api
 
 		$method_path = $this->call_list[$method];
 		if(!$method_path){
-			$msg = '接口不存在!';
+			$rs_msg = '接口不存在!';
 			return false;
 		}
 
@@ -55,6 +55,7 @@ class qy_request extends qy_api
 		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($query_params));
 		$rs = curl_exec($ch);
+
 
 		if(!$apilog_id){
 			$apilog_id = $this->add_log($method, $data, $log_name);
@@ -74,7 +75,7 @@ class qy_request extends qy_api
 			$this->update_log_status($apilog_id, $succ, $rs_msg);
 		}
 
-		return true;
+		return $rs ? true : false;
 	}
 
 
@@ -115,7 +116,6 @@ class qy_request extends qy_api
 		$sql = substr($sql, 0, -1);
 
 		$sql .= ' where apilog_id = '.$id;
-		echo $sql;
 
 		return $this->log->db->exec($sql);
 	}
