@@ -27,6 +27,8 @@ class qy_request extends qy_api
 
 	public function call($method, $data, $log_name, &$rs_msg = '', $apilog_id = false){
 
+		$db_status = $this->log->db->exec('start transaction');
+		
 		$json_str = json_encode($data);
 
 		$query_params = array(
@@ -57,8 +59,11 @@ class qy_request extends qy_api
 		$rs = curl_exec($ch);
 
 
+		$is_re = false;
 		if(!$apilog_id){
 			$apilog_id = $this->add_log($method, $data, $log_name);
+		}else{
+			$is_re = true;
 		}
 
 
@@ -72,9 +77,10 @@ class qy_request extends qy_api
 		}
 
 		if($apilog_id){
-			$this->update_log_status($apilog_id, $succ, $rs_msg);
+			$this->update_log_status($apilog_id, $succ, $rs_msg, $is_re);
 		}
 
+		$this->log->db->commit($db_status);
 		return $rs ? true : false;
 	}
 
@@ -98,7 +104,7 @@ class qy_request extends qy_api
 
 
 
-	public function update_log_status($id, $succ, $msg){
+	public function update_log_status($id, $succ, $msg, $is_re){
 
 		$table_name = $this->log->table_name(1);
 
@@ -115,8 +121,11 @@ class qy_request extends qy_api
 
 		$sql = substr($sql, 0, -1);
 
-		$sql .= ' where apilog_id = '.$id;
+		if($is_re){
+			$sql .= ',retry=retry+1 ';
+		}
 
+		$sql .= ' where apilog_id = '.$id;
 		return $this->log->db->exec($sql);
 	}
 
