@@ -14,6 +14,12 @@ class qy_api
 	 */
 	public $sign;
 
+	public $merchantId = '0001';
+	public $storeNo = '001';
+
+
+
+
 	public function __construct(){
 		$this->msg = kernel::single('qy_message');
 		$this->sign = kernel::single('qy_sign');

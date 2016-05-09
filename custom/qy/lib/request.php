@@ -8,16 +8,11 @@ class qy_request extends qy_api
 	 */
 	public $log;
 
-	public $method_list = array(
-		'qy.order.create' => array('title' => '订单创建', 'worker' => 'qy_rpc_request_user@create'),
-	);
-
-
 	public $call_url = 'http://218.106.92.66:8138/drug-web/online/';
 
 	public $call_list = array(
 		'qy.order.create' => array('title' => '订单创建', 'worker' => 'createOrder.do'),
-
+		'qy.order.pay' => array('title' => '订单支付', 'worker' => 'payOrder.do'),
 	);
 
 	public function __construct(){
@@ -28,7 +23,7 @@ class qy_request extends qy_api
 	public function call($method, $data, $log_name, &$rs_msg = '', $apilog_id = false){
 
 		$db_status = $this->log->db->exec('start transaction');
-		
+
 		$json_str = json_encode($data);
 
 		$query_params = array(
