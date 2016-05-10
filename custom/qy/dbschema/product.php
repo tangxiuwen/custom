@@ -1,5 +1,5 @@
 <?php
-$db['drug'] = array(
+$db['product'] = array(
 	'columns' =>
 		array(
 			'id' =>
@@ -12,49 +12,29 @@ $db['drug'] = array(
 					'extra' => 'auto_increment',
 					'in_list' => false,
 				),
-			'drug_id' =>
+			'productionId' =>
 				array(
 					'type' => 'table:share',
 					'default' => 0,
 					'required' => true,
-					'label' => app::get('qy')->_('药品库id'),
+					'label' => app::get('qy')->_('理赔产品id'),
 					'editable' => false,
 					'in_list' => true,
 				),
-			'drug_name' =>
+			'productionName' =>
 				array(
 					'type' => 'varchar(100)',
 					'default' => '',
 					'required' => true,
 					'editable' => false,
-					'label' => app::get('qy')->_('药品库名称'),
+					'label' => app::get('qy')->_('理赔产品名称'),
 					'in_list' => true,
-					'default_in_list' => true,
+					'default_in_list' => false,
 				),
-			'goods_id' =>
+			'drugHouseId' =>
 				array(
 					'type' => 'bn',
-					'label' => app::get('qy')->_('货品编码'),
-					'default' => 0,
-					'type' => 'int(8)',
-					'editable' => true,
-					'in_list' => true,
-					'default_in_list' => true,
-				),
-			'product_id' =>
-				array(
-					'type' => 'bn',
-					'label' => app::get('qy')->_('货品编码'),
-					'default' => 0,
-					'type' => 'int(8)',
-					'editable' => true,
-					'in_list' => true,
-					'default_in_list' => true,
-				),
-			'product_bn' =>
-				array(
-					'type' => 'bn',
-					'label' => app::get('qy')->_('货品编码'),
+					'label' => app::get('qy')->_('自定义药品库id'),
 					'default' => 0,
 					'type' => 'varchar(100)',
 					'editable' => true,
@@ -76,7 +56,6 @@ $db['drug'] = array(
 				'editable' => false,
 				'in_list' => true,
 				'orderby' => true,
-				'default_in_list' => true,
 			),
 		),
 	'comment' => app::get('qy')->_('药品库信息'),

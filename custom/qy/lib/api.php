@@ -17,12 +17,16 @@ class qy_api
 	public $merchantId = '0001';
 	public $storeNo = '001';
 
-
+	/**
+	 * @var int
+	 */
+	public $run_time;
 
 
 	public function __construct(){
 		$this->msg = kernel::single('qy_message');
 		$this->sign = kernel::single('qy_sign');
+		$this->run_time = time();
 	}
 
 

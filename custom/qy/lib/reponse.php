@@ -6,7 +6,7 @@ class qy_reponse extends qy_api
 	public $method_list = array(
 		'user.update' => array('title' => '会员更新/删除/添加', 'worker' => 'qy_rpc_reponse_user@update'),
 		'user.login' => array('title' => '会员信任登录', 'worker' => 'qy_rpc_reponse_user@login'),
-		'fiscal.update' => array('title' => '理财产品更新/删除/添加', 'worker' => 'qy_rpc_reponse_fiscal@update'),
+		'product.update' => array('title' => '理财产品更新/删除/添加', 'worker' => 'qy_rpc_reponse_product@update'),
 		'store.drug.update' => array('title' => '药品库更新/删除/添加', 'worker' => 'qy_rpc_reponse_drug@update'),
 	);
 
@@ -52,7 +52,8 @@ class qy_reponse extends qy_api
         $method = $worker[1];
         $instance = kernel::single($class);
 
-		$instance->$method($data);
+		$msg = '';
+		$instance->$method($data, $msg);
 
 		END:
 		$this->msg->send();

@@ -21,7 +21,7 @@ class qy_rpc_reponse_user extends qy_reponse{
 	}
 
 
-	public function update($data){
+	public function update($data, &$msg){
 		$msg = '';
 
 		$format_data = array(

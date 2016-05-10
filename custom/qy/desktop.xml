@@ -1,9 +1,12 @@
 <desktop>
     <permissions>
-        <permission id="drugadmin" display='true'>药品库</permission>
+        <permission id="drugadmin" display='true'>泉依</permission>
     </permissions>
-    <workground name="药品库" id="qy.drug.admin" controller="admin_drug" action="index" order="40">
-        <menugroup name="药品库">
+    <workground name="泉依" id="qy.drug.admin" controller="admin_drug" action="index" order="40">
+        <menugroup name="泉依">
+            <menu controller='admin_product' action='index' permission='drugadmin' display='true' order='9'>理赔产品列表</menu>
+        </menugroup>
+        <menugroup name="泉依">
             <menu controller='admin_drug' action='index' permission='drugadmin' display='true' order='10'>药品库列表</menu>
         </menugroup>
     </workground>

@@ -13,7 +13,7 @@ class qy_rpc_reponse_drug extends qy_reponse{
 		parent::__construct();
 	}
 
-	public function update(){
+	public function update($data, &$msg){
 
 		echo 11;
 
