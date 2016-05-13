@@ -24,6 +24,11 @@ class qy_rpc_reponse_user extends qy_reponse{
 	public function update($data, &$msg){
 		$msg = '';
 
+		if(empty($data['userId'])){
+			$msg = '用户账号不能为空';
+			goto END;
+		}
+
 		$format_data = array(
 			'provider_openid'	=> $data['userId'], //用户账号
 			'provider_code'	=> $data['cardNo'], //泉依卡号
@@ -36,6 +41,7 @@ class qy_rpc_reponse_user extends qy_reponse{
 			return $this->msg->set_msg($msg);
 		}
 
+		END:
 		return $this->msg->set_msg($msg, false);
 	}
 

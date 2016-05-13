@@ -27,7 +27,6 @@ class qy_rpc_reponse_drug extends qy_reponse{
 
 		);
 		$this->add($sdf, $msg);
-var_dump($msg);
 		die();
 	}
 

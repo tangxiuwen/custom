@@ -21,21 +21,16 @@ class qy_reponse extends qy_api
      */
     public function call($params)
     {
-		$data = $_POST;
 
-		//$data_str = json_encode($_POST, 256);
-		foreach($_POST as &$value){
-			$value = urlencode($value);
-		}
-		$data_str = urldecode(json_encode($_POST));
+
+		$data_str = $_POST['jsonStr'];
+		$data = json_decode($data_str, true);
 
 		$sign = $_GET['signature'];
 
-		//$new_sign = $this->get_sign($data_str);
-
 		if(!$this->verify($data_str, $sign)){
 			$this->msg->set_msg('签名错误', false);
-			//goto END;
+			goto END;
 		}
 
 		$method = $params['method'];

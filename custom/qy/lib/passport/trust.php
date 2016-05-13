@@ -149,7 +149,21 @@ class qy_passport_trust implements  pam_interface_passport{
 
 
 		if(!empty($open_info)) {
-			$msg = '会员已经存在';
+			$update_data = array(
+				'provider_code' => $data['provider_code'], //泉依卡号
+				'realname' => $data['realname'],   //理赔产品id
+				'nickname' => $data['nickname'],  //用户姓名
+			);
+
+
+			if(!$this->db->update($update_data ,array('openid' => $login_name))){
+				goto END;
+			}
+
+			if($db->commit($db_begin)){
+				$msg = '更新成功';
+				return true;
+			}
 		}else{
 			$msg = '保存失败!';
 			$lv_model = app::get('b2c')->model('member_lv');

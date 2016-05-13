@@ -14,8 +14,8 @@ class qy_message
 
 	public function send(){
 		$data = array(
-			'status' => $this->suc,
-			'msg' => $this->msg
+			'rspCode' => $this->suc == true ? 0 : 1,
+			'rspMsg' => $this->msg
 		);
 
 		echo json_encode($data);
