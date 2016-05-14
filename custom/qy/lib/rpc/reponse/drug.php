@@ -14,20 +14,16 @@ class qy_rpc_reponse_drug extends qy_reponse{
 	}
 
 	public function update($data, &$msg){
-
-		echo 11;
-
-
 		$sdf = array(
 			'is_simple' => true,
-			//'iid' => 1,
 			'name' => '测试',
 			'brief' => '简介',
 			'num' => 0,
 
 		);
-		$this->add($sdf, $msg);
-		die();
+		$rs = $this->add($sdf, $msg);
+
+		return $this->msg->set_msg($msg, $rs);
 	}
 
 

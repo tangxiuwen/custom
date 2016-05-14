@@ -14,7 +14,7 @@ $db['product'] = array(
 				),
 			'productionId' =>
 				array(
-					'type' => 'table:share',
+					'type' => 'int(8)',
 					'default' => 0,
 					'required' => true,
 					'label' => app::get('qy')->_('理赔产品id'),
@@ -59,4 +59,15 @@ $db['product'] = array(
 			),
 		),
 	'comment' => app::get('qy')->_('药品库信息'),
+	 'index' =>
+		 array(
+			 'ind_index' =>
+				 array(
+					 'columns' =>
+						 array(
+							 0 => 'productionId',
+						 ),
+					 'prefix' => 'UNIQUE',
+				 ),
+		 ),
 );

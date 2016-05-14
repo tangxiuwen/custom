@@ -14,7 +14,7 @@ $db['drug'] = array(
 				),
 			'drug_id' =>
 				array(
-					'type' => 'table:share',
+					'type' => 'int(8)',
 					'default' => 0,
 					'required' => true,
 					'label' => app::get('qy')->_('药品库id'),

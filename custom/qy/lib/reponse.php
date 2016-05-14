@@ -22,6 +22,7 @@ class qy_reponse extends qy_api
     public function call($params)
     {
 
+		jrl_relog(print_r($_POST, true).$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
 
 		$data_str = $_POST['jsonStr'];
 		$data = json_decode($data_str, true);
