@@ -31,30 +31,20 @@ $db['drug'] = array(
 					'in_list' => true,
 					'default_in_list' => true,
 				),
-			'goods_id' =>
-				array(
-					'type' => 'bn',
-					'label' => app::get('qy')->_('货品编码'),
-					'default' => 0,
-					'type' => 'int(8)',
-					'editable' => true,
-					'in_list' => true,
-					'default_in_list' => true,
-				),
-			'product_id' =>
-				array(
-					'type' => 'bn',
-					'label' => app::get('qy')->_('货品编码'),
-					'default' => 0,
-					'type' => 'int(8)',
-					'editable' => true,
-					'in_list' => true,
-					'default_in_list' => true,
-				),
 			'product_bn' =>
 				array(
 					'type' => 'bn',
 					'label' => app::get('qy')->_('货品编码'),
+					'default' => 0,
+					'type' => 'varchar(100)',
+					'editable' => true,
+					'in_list' => true,
+					'default_in_list' => true,
+				),
+			'price' =>
+				array(
+					'type' => 'money',
+					'label' => app::get('qy')->_('价格'),
 					'default' => 0,
 					'type' => 'varchar(100)',
 					'editable' => true,
