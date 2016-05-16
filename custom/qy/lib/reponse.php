@@ -28,51 +28,108 @@ class qy_reponse extends qy_api
 		$data = json_decode($data_str, true);
 
 		$sign = $_GET['signature'];
+		$method = $params['method'];
+		$method_info = $this->method_list[$method];
+		$is_re = false;
+
+		if(empty($data['reqId'])){
+			$apilog_id = $this->add_log($method, $data, $method_info['title']);
+		}else{
+			$filter = array(
+				'log_type' => 'qy',
+				'api_type' => 'response',
+				'msg_id' => $data['reqId']
+			);
+			$log_info = $this->log->getRow('apilog_id,status', $filter);
+
+			if(empty($log_info)){
+				$apilog_id = $this->add_log($method, $data, $method_info['title']);
+			}else{
+				$is_re = true;
+				$apilog_id = $log_info['apilog_id'];
+				if($log_info['status'] == 'success'){
+					$this->msg->set_msg('成功', true);
+					goto END;
+				}
+			}
+		}
+
 
 		if(!$this->verify($data_str, $sign)){
 			$this->msg->set_msg('签名错误', false);
 			goto END;
 		}
 
-		$method = $params['method'];
 
 		if(empty($method) || empty($this->method_list[$method])){
 			$this->msg->set_msg('接口不存在', false);
 			goto END;
 		}
 
-		$method_info = $this->method_list[$method];
         if (empty($method_info)) return false;
+
+
         $worker = explode('@', $method_info['worker']);
         $class = $worker[0];
         $method = $worker[1];
         $instance = kernel::single($class);
 
 		$msg = '';
-		$instance->$method($data, $msg);
+		$rs = $instance->$method($data, $msg);
 
 		END:
+		if($apilog_id){
+			$this->update_log_status($apilog_id, $this->msg->suc, $this->msg->msg, $is_re);
+		}
 		$this->msg->send();
 
     }
 
+	public function add_log($method, $params, $log_name){
+		$time = time();
+		$data = array(
+			'task_name' => $log_name,
+			'status' => 'running',
+			'api_type' => 'response',
+			'worker' => $method,
+			'msg_id' => $params['reqId'],
+			'params' => serialize($params),
+			'log_type' => 'qy',
+			'createtime' => $time,
+			'last_modified' => $time,
+			'calltime' => $time,
+		);
 
-	public function request($method, $params, $writelog, $async = false, $addon = '', $time_out = 5)
-    {
-
-		/** @var apiactionlog_mdl_apilog $oAction_log */
-        $oAction_log = app::get('apiactionlog')->model('apilog');
-        $log_title = $writelog['log_title'];
-        $original_bn = $writelog['original_bn'];
-        $log_type = $writelog['log_type'];
+		return $this->log->insert($data);
+	}
 
 
-        $time_out = 60;
-        $log_sdf = $oAction_log->write_log($log_title, $method['method'], $params, $log_type, 'fail', '', $original_bn, $addon, 'request');
-        $rpc_callback = array('', '', array('log_id' => $log_sdf['log_id']));
+	public function update_log_status($id, $succ, $msg, $is_re = false){
+
+		$table_name = $this->log->table_name(1);
+
+		$sql = ' update '.$table_name.' set ';
+		$data = array(
+			'status' => $succ ? 'success' : 'fail',
+			'last_modified' => time(),
+			'msg' => $msg
+		);
+
+		foreach($data as $key => $value){
+			$sql .= ' '.$key.'="'.$value.'",';
+		}
+
+		$sql = substr($sql, 0, -1);
+
+		if($is_re){
+			$sql .= ',retry=retry+1 ';
+		}
+
+		$sql .= ' where apilog_id = '.$id;
+
+		return $this->log->db->exec($sql);
+	}
 
 
-        return $this->rpc_request($method, $params, $rpc_callback, $async, $time_out, $writelog, $addon);
-    }
 
 }

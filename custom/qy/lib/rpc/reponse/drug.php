@@ -34,7 +34,6 @@ class qy_rpc_reponse_drug extends qy_reponse{
 			goto END;
 		}
 
-		echo 666;
 		if(!$this->do_insert($msg)){
 			goto END;
 		}
@@ -106,10 +105,10 @@ class qy_rpc_reponse_drug extends qy_reponse{
 		foreach($this->insert_data as $value){
 			$update_data = array(
 				'id' => 0,
-				'drug_id' => $value['drugHouseId'],
+				'drug_id' => '"'.$value['drugHouseId'].'"',
 				'drug_name' => '"'.$value['drugHouseName'].'"',
 				'product_bn' => $value['goodNo'],
-				'price' => $value['price'],
+				'price' => empty($value['price']) ? 0 : $value['price'],
 				'createtime' => $this->run_time,  		//更新时间
 				'last_modify' => $this->run_time,  		//更新时间
 			);

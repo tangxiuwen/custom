@@ -12,7 +12,7 @@ class qy_ctl_admin_product extends desktop_controller
 	{
 		$this->finder('qy_mdl_product', array(
 			'title' => app::get('qy')->_('理赔产品列表'),
-
+			'use_buildin_recycle' => false,
 		));
 	}
 

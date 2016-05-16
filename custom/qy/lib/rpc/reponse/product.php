@@ -55,6 +55,11 @@ class qy_rpc_reponse_product extends qy_reponse{
 	public function getUpdateDate($data){
 
 		foreach($data as $value){
+
+			if(empty($value['productionId'])){
+				continue;
+			}
+
 			switch($value['operate']){
 				case 1:
 					$this->insert_data[] = $value;
@@ -80,7 +85,7 @@ class qy_rpc_reponse_product extends qy_reponse{
 		foreach($this->update_data as $value){
 			$update_data = array(
 				'productionName' => $value['productionName'],	//理赔产品名称
-				'drugHouseId' => $value['drugHouseId'],			//自定义药品库id
+				'drugHouseId' => '"'.$value['drugHouseId'].'"',			//自定义药品库id
 				'last_modify' => $this->run_time,  		//更新时间
 			);
 
@@ -105,7 +110,7 @@ class qy_rpc_reponse_product extends qy_reponse{
 				'id' => 0,
 				'productionId' => $value['productionId'],	//理赔产品id
 				'productionName' => '"'.$value['productionName'].'"',	//理赔产品名称
-				'drugHouseId' => $value['drugHouseId'],			//自定义药品库id
+				'drugHouseId' => '"'.$value['drugHouseId'].'"',			//自定义药品库id
 				'createtime' => $this->run_time,  		//更新时间
 				'last_modify' => $this->run_time,  		//更新时间
 			);

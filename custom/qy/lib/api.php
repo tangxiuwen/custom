@@ -22,10 +22,17 @@ class qy_api
 	 */
 	public $run_time;
 
+	/**
+	 * @var apiactionlog_mdl_apilog
+	 */
+	public $log;
+
 
 	public function __construct(){
 		$this->msg = kernel::single('qy_message');
 		$this->sign = kernel::single('qy_sign');
+		$this->log = kernel::single('apiactionlog_mdl_apilog');
+
 		$this->run_time = time();
 	}
 

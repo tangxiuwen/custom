@@ -12,6 +12,7 @@ class qy_ctl_admin_drug extends desktop_controller
 	{
 		$this->finder('qy_mdl_drug', array(
 			'title' => app::get('qy')->_('药品库列表'),
+			'use_buildin_recycle' => false,
 			'actions' => array(
 			),
 		));

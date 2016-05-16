@@ -3,11 +3,6 @@
 class qy_request extends qy_api
 {
 
-	/**
-	 * @var apiactionlog_mdl_apilog
-	 */
-	public $log;
-
 	public $call_url = 'http://218.106.92.66:8138/drug-web/online/';
 
 	public $call_list = array(
@@ -15,10 +10,6 @@ class qy_request extends qy_api
 		'qy.order.pay' => array('title' => '订单支付', 'worker' => 'payOrder.do'),
 	);
 
-	public function __construct(){
-		$this->log = kernel::single('apiactionlog_mdl_apilog');
-		parent::__construct();
-	}
 
 	public function call($method, $data, $log_name, &$rs_msg = '', $apilog_id = false){
 

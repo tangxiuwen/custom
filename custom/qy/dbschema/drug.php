@@ -14,7 +14,7 @@ $db['drug'] = array(
 				),
 			'drug_id' =>
 				array(
-					'type' => 'int(8)',
+					'type' => 'varchar(100)',
 					'default' => 0,
 					'required' => true,
 					'label' => app::get('qy')->_('药品库id'),
@@ -70,4 +70,16 @@ $db['drug'] = array(
 			),
 		),
 	'comment' => app::get('qy')->_('药品库信息'),
+	'index' =>
+		 array(
+			 'ind_index' =>
+				 array(
+					 'columns' =>
+						 array(
+							 0 => 'product_bn',
+							 1 => 'drug_id',
+						 ),
+					 'prefix' => 'UNIQUE',
+				 ),
+		 ),
 );
